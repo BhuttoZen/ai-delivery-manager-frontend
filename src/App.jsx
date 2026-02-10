@@ -4,6 +4,9 @@ import WeeklyReport from './components/WeeklyReport'
 import Rewriter from './components/Rewriter'
 import RiskAnalysis from './components/RiskAnalysis'
 import GenerateAll from './components/GenerateAll'
+import TicketsPage from './pages/TicketsPage'
+import MembersPage from './pages/MembersPage'
+import PRsPage from './pages/PRsPage'
 import './App.css'
 
 function App(){
@@ -24,6 +27,9 @@ function App(){
         <button className={`nav-btn ${view==='rewrite'?'active':''}`} onClick={() => setView('rewrite')}>Rewriter</button>
         <button className={`nav-btn ${view==='risk'?'active':''}`} onClick={() => setView('risk')}>Risk Analysis</button>
         <button className={`nav-btn ${view==='all'?'active':''}`} onClick={() => setView('all')}>Generate All</button>
+        <button className={`nav-btn ${view==='tickets'?'active':''}`} onClick={() => setView('tickets')}>Tickets</button>
+        <button className={`nav-btn ${view==='members'?'active':''}`} onClick={() => setView('members')}>Members</button>
+        <button className={`nav-btn ${view==='prs'?'active':''}`} onClick={() => setView('prs')}>Pull Requests</button>
       </aside>
 
       <main className="main">
@@ -33,6 +39,9 @@ function App(){
         {view === 'rewrite' && <div className="card"><Rewriter /></div>}
         {view === 'risk' && <div className="card"><RiskAnalysis /></div>}
         {view === 'all' && <div className="card"><GenerateAll /></div>}
+        {view === 'tickets' && <div className="card"><TicketsPage /></div>}
+        {view === 'members' && <div className="card"><MembersPage /></div>}
+        {view === 'prs' && <div className="card"><PRsPage /></div>}
       </main>
     </div>
   )

@@ -1,14 +1,14 @@
-import { useState } from 'react'
-import api from '../services/api'
+import { useState } from "react"
+import api from "../services/api"
 
 export default function Rewriter(){
-  const [tone, setTone] = useState('client')
-  const [text, setText] = useState('')
+  const [tone, setTone] = useState("client")
+  const [text, setText] = useState("")
   const [resp, setResp] = useState(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
 
-  async function generate(){
+  async function rewrite(){
     setLoading(true)
     setError(null)
     try{
@@ -23,30 +23,31 @@ export default function Rewriter(){
 
   return (
     <div>
-      <h2>Rewrite Summary</h2>
-      <div className="controls">
-        <label style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-          <span style={{ fontSize: 13, color: 'var(--muted)' }}>Tone</span>
-          <select value={tone} onChange={e => setTone(e.target.value)}>
+      <h2>Rewriter</h2>
+      <div className="card">
+        <h3 style={{margin: "0 0 16px 0", fontSize: 14, fontWeight: 600}}>Rewrite Summary</h3>
+        <div style={{marginBottom: 12}}>
+          <strong style={{display: "block", marginBottom: 6}}>Tone</strong>
+          <select value={tone} onChange={e=>setTone(e.target.value)} style={{width: "100%"}}>
             <option value="client">Client</option>
             <option value="technical">Technical</option>
             <option value="executive">Executive</option>
           </select>
-        </label>
-      </div>
-      <div style={{ marginBottom: 8 }}>
-        <label style={{ fontSize: 13, color: 'var(--muted)' }}>Source text (optional)</label>
-        <textarea rows={4} cols={60} value={text} onChange={e => setText(e.target.value)} style={{ width: '100%', marginTop: 6, borderRadius:6, padding:8 }} />
-      </div>
-      <div className="controls"><button className="btn primary" onClick={generate} disabled={loading}>{loading? 'Generating...' : 'Generate'}</button></div>
-      {error && <div style={{ color: 'red', marginTop: 8 }}>{error}</div>}
-      {resp ? (
-        <div style={{ marginTop: 12 }}>
-          <div className="field"><strong>Tone</strong><div>{resp.tone}</div></div>
-          <div className="field"><strong>Rewritten</strong><div>{resp.rewritten_summary}</div></div>
         </div>
-      ) : (
-        <div className="pre">No data yet</div>
+        <div style={{marginBottom: 12}}>
+          <strong style={{display: "block", marginBottom: 6}}>Text</strong>
+          <textarea value={text} onChange={e=>setText(e.target.value)} style={{width: "100%", minHeight: 100}} placeholder="Paste summary text here..."></textarea>
+        </div>
+        <button className="btn primary" onClick={rewrite} disabled={loading}>{loading? "Rewriting..." : "Rewrite"}</button>
+      </div>
+      {error && <div className="card" style={{ backgroundColor: "var(--danger-light)", borderLeft: "4px solid var(--danger)", color: "var(--danger)" }}>{error}</div>}
+      {resp && (
+        <div className="card">
+          <div className="field">
+            <strong>Rewritten ({resp.tone})</strong>
+            <div style={{marginTop: 8}}>{resp.rewritten_summary}</div>
+          </div>
+        </div>
       )}
     </div>
   )
